@@ -22,12 +22,12 @@ $channel->queue_bind($queueName, $exchangeName, 'canxingjian');
 $channel->confirm_select();
 //设置确认回调
 $channel->set_ack_handler(function ( AMQPMessage $message) {
-    echo "Message Acknowledged: " . $message->getBody() . "\n";
-    echo "消息已确认\n";
+    echo "消息已确认  Message Acknowledged: " . $message->getBody() . "\n";
+
 });
 $channel->set_nack_handler(function(AMQPMessage $message){
-    echo "Message Not Acknowledged: " . $message->getBody() . "\n";
-    echo "消息未确认\n";
+    echo "消息未确认 Message Not Acknowledged: " . $message->getBody() . "\n";
+
 });
 
 //发布消息

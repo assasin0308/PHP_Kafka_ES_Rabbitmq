@@ -36,7 +36,7 @@ $message = new AMQPMessage(
         'mandatory' => true, // 启用return机制
     ]
 );
-$channel->basic_publish($message, $exchangeName, '', true);
+$channel->basic_publish($message, $exchangeName, $routing_key, true);
 //等待确认
 $channel->wait_for_pending_acks_returns(0);
 echo "Message sent.\n";

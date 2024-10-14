@@ -38,7 +38,7 @@ $channel->set_nack_handler(function(AMQPMessage $message){
 //$message = new AMQPMessage('Hello, RabbitMQ2 ------- publisher_confirm!');
 //发布消息 持久化消息
 $message = new AMQPMessage(
-    'Hello, RabbitMQ this is 持久化消息3691230111 !', [
+    'Hello, RabbitMQ this is 持久化消息3691230222 !', [
         'content_type' => 'text/plain',
         'delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT,
         'mandatory' => true, // 启用return机制

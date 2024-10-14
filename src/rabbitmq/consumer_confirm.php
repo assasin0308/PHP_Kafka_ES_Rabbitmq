@@ -37,10 +37,10 @@ $callback = function (AMQPMessage $msg) use (&$retryCount){
 
     try {
         // 模拟消息处理逻辑 异常情况
-        $data = json_decode($msg->getBody(), true);
-        if (!isset($data['valid'])) {
-            throw new Exception("Invalid message format");
-        }
+//        $data = json_decode($msg->getBody(), true);
+//        if (!isset($data['valid'])) {
+//            throw new Exception("Invalid message format");
+//        }
 
         /*手动确认*/
         echo ' [消费者:] 收到消息:  ', $msg->body, "\n";
@@ -69,17 +69,7 @@ $callback = function (AMQPMessage $msg) use (&$retryCount){
             $msg->nack(true); // 重新入队列
         }
 
-
-
-
     }
-
-
-
-
-
-
-
 
 
 };

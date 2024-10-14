@@ -10,12 +10,12 @@ $channel = $connection->channel();
 
 $exchangeName = 'Acewill';
 $queueName = 'hongzhuangyuan';
-
+$routing_key = 'canxingjian';
 //声明交换机
 $channel->exchange_declare($exchangeName, 'direct', false, true, false);
 // 声明队列
 $channel->queue_declare($queueName, false, true, false, false);
-$channel->queue_bind($queueName, $exchangeName, 'canxingjian');
+$channel->queue_bind($queueName, $exchangeName, $routing_key);
 
 
 
@@ -36,10 +36,10 @@ $message = new AMQPMessage(
         'mandatory' => true, // 启用return机制
     ]
 );
-$channel->basic_publish($message, $exchangeName, 'canxingjian', true);
+$channel->basic_publish($message, $exchangeName, '', true);
 //等待确认
 $channel->wait_for_pending_acks_returns(0);
-
+echo "Message sent.\n";
 
 // 关闭连接
 $channel->close();

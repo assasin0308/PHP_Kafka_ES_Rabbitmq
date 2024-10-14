@@ -4,6 +4,8 @@ require_once  '../vendor/autoload.php';
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 
+
+
 // 创建链接
 $connection = new AMQPStreamConnection('127.0.0.1', 5672, 'admin', '123456','/');
 $channel = $connection->channel();
@@ -22,6 +24,7 @@ $channel->queue_bind($queueName, $exchangeName, 'canxingjian');
 $channel->confirm_select();
 //设置确认回调
 $channel->set_ack_handler(function ( AMQPMessage $message) {
+    print_r($message);
     echo "消息已确认  Message Acknowledged: " . $message->getBody() . "\n";
 
 });

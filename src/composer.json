@@ -1,0 +1,17 @@
+{
+    "name": "lenovo/src",
+    "autoload": {
+        "psr-4": {
+            "Lenovo\\Src\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "assasin0308",
+            "email": "assasin0308@sina.com"
+        }
+    ],
+    "require": {
+        "php-amqplib/php-amqplib": "^2.8"
+    }
+}

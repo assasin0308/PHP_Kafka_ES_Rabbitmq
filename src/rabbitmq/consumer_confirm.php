@@ -21,7 +21,7 @@ $channel->exchange_declare($exchangeName, 'direct', false, true, false);
 $channel->queue_declare($queueName, false, true, false, false);
 $channel->queue_bind($queueName, $exchangeName, $route_key);
 
-echo " [*] Waiting for messages. To exit press CTRL+C\n";
+echo " [消费者:] Waiting for messages. To exit press CTRL+C\n";
 
 // 重试次数记录
 $retryCount = [];

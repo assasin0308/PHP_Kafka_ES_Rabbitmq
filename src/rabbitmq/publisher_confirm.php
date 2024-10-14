@@ -42,6 +42,7 @@ $message = new AMQPMessage(
         'content_type' => 'text/plain',
         'delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT,
         'mandatory' => true, // 启用return机制
+//        'expiration' => 10000 // 设置消息过期时间
     ]
 );
 $channel->basic_publish($message, $exchangeName, $route_key);

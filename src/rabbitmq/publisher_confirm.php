@@ -8,9 +8,14 @@ use PhpAmqpLib\Message\AMQPMessage;
 $connection = new AMQPStreamConnection('127.0.0.1', 5672, 'admin', '123456','/');
 $channel = $connection->channel();
 
-// 声明队列
-$channel->queue_declare('Acewill', false, true, false, false);
+$exchangeName = 'Acewill';
+$queueName = 'hongzhuangyuan';
 
+//声明交换机
+$channel->exchange_declare($exchangeName, 'direct', false, true, false);
+// 声明队列
+$channel->queue_declare($queueName, false, true, false, false);
+$channel->queue_bind($queueName, $exchangeName, 'canxingjian');
 // 1.生产者消息确认
 // publisher-confirm机制确认消息是否成功到达交换机。
 // 启用pubslisher-confirm机制
@@ -26,8 +31,8 @@ $channel->set_nack_handler(function(AMQPMessage $message){
 });
 
 //发布消息
-$message = new AMQPMessage('Hello, RabbitMQ!');
-$channel->basic_publish($message, '', 'Acewill');
+$message = new AMQPMessage('Hello, RabbitMQ ------- publisher_confirm!');
+$channel->basic_publish($message, $exchangeName, 'canxingjian');
 
 // 等待确认
 $channel->wait_for_pending_acks(0);

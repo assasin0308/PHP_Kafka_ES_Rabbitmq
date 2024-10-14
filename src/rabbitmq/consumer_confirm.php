@@ -25,13 +25,30 @@ echo " [*] Waiting for messages. To exit press CTRL+C\n";
 
 // 回调函数，处理接收到的消息
 $callback = function (AMQPMessage $msg) {
+    try {
+        // 模拟消息处理逻辑 异常情况
+//        $data = json_decode($msg->getBody(), true);
+//        if (!isset($data['valid'])) {
+//            throw new Exception("Invalid message format");
+//        }
 
-    echo ' [消费者:] 收到消息:  ', $msg->body, "\n";
-    // 模拟消息处理
-    sleep(2);
+        echo ' [消费者:] 收到消息:  ', $msg->body, "\n";
 
-    // 确认消息已被处理
-    $msg->ack();
+        // 模拟消息处理
+        sleep(3);
+
+        // 手动确认消息
+        $msg->ack();
+
+    } catch (Exception $e) {
+        // 捕获异常，不发送确认，使消息重新入队列
+        echo " [消费者:] 发生错误: ", $e->getMessage(), "\n";
+        $msg->nack(true); // 重新入队列
+    }
+
+
+
+
 
 
     echo " [消费者:] 消息已被处理!\n";

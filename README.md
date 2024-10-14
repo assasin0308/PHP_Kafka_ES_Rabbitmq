@@ -13,8 +13,9 @@ composer create-project --prefer-dist laravel/laravel PHP_Kafka_ES_RabbitMQ
 # kafka PHP客户端安装
 composer require nmred/kafka-php
 
-# rabbitmq PHP客户端安装
-composer require php-amqplib/php-amqplib
+# rabbitmq PHP客户端安装 ^2.10
+composer require php-amqplib/php-amqplib --ignore-platform-req=ext-sockets
+
 ```
 
 ![img_1.png](img_1.png)

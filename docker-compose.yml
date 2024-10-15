@@ -36,6 +36,10 @@ services:
     networks:
       - app-network
 
+
+
+
+
   rabbitmq:
     image: rabbitmq:3-management
     container_name: rabbitmq
@@ -43,6 +47,7 @@ services:
       - "5672:5672"
       - "15672:15672"
     environment:
+      RABBITMQ_ERLANG_COOKIE: SWQOKODSQALRPCLNMEQG
       RABBITMQ_DEFAULT_USER: admin
       RABBITMQ_DEFAULT_PASS: 123456
       # rabbitmq_management：管理界面
@@ -50,8 +55,44 @@ services:
       # rabbitmq_consistent_hash_exchange：一致性哈希交换
       # rabbitmq_top：用于查看 RabbitMQ 状态
       RABBITMQ_PLUGINS: rabbitmq_delayed_message_exchange rabbitmq_consistent_hash_exchange rabbitmq_top
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
     networks:
       - app-network
+
+  rabbitmq-2:
+    image: rabbitmq:3-management
+    container_name: rabbitmq-2
+    environment:
+      RABBITMQ_ERLANG_COOKIE: SWQOKODSQALRPCLNMEQG
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: 123456
+      #RABBITMQ_PLUGINS: rabbitmq_delayed_message_exchange rabbitmq_consistent_hash_exchange rabbitmq_top
+    ports:
+      - "5673:5672"
+      - "15673:15672"
+    networks:
+      - app-network
+
+  rabbitmq-3:
+    image: rabbitmq:3-management
+    container_name: rabbitmq-3
+    environment:
+      RABBITMQ_ERLANG_COOKIE: SWQOKODSQALRPCLNMEQG
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: 123456
+      #RABBITMQ_PLUGINS: rabbitmq_delayed_message_exchange rabbitmq_consistent_hash_exchange rabbitmq_top
+    ports:
+      - "5674:5672"
+      - "15674:15672"
+    networks:
+      - app-network
+
+
+
+
+
+
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.17.0
@@ -78,3 +119,6 @@ networks:
 volumes:
   esdata:
     driver: local
+  rabbitmq_data:
+  rabbitmq2_data:
+  rabbitmq3_data:

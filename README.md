@@ -65,8 +65,24 @@ RabbitMQ常见重点问题
     也可以通过命令将一个运行中的队列修改为惰性队列
     rabbitmqctl set_policy Lazy "^lazy-queue$" '{"queue-mode":"lazy"}' --apply-to queues
     
-4. 高可用问题,如何解决单点MQ故障而导致的不可以问题 ? 
-    MQ集群
+4. 高可用问题,如何解决单点MQ故障而导致的不可用问题 ? 
+    MQ集群:
+        普通集群：分布式集群，将队列分散到集群的各个节点，从而提高整个集群的并发能力
+            * 会在集群的各个节点共享部分数据,包括交换机,队列元信息.但不包括队列中的消息
+            * 当访问集群某个节点时,如果队列不在该节点,会从数据所在节点传递到当前节点并返回
+            * 队列所在的节点宕机,队列中的消息就会丢失
+           
+           需要在 rabbit2 和 rabbit3 容器中分别执行以上命令，将它们加入到 rabbit1 的集群中
+               rabbitmqctl stop_app
+               rabbitmqctl join_cluster rabbit@rabbit1   
+                    示例: rabbitmqctl join_cluster rabbit@节点2      节点2终端执行
+                          rabbitmqctl join_cluster rabbit@节点3      节点3终端执行
+               rabbitmqctl start_app
+
+            
+        镜像集群：主从集群,普通集群的基础上,添加了备份功能,提高集群的数据可用性
+            * 
+        仲裁集群：Raft协议确保主从数据的一致性
  
 
 ```

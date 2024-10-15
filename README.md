@@ -75,18 +75,24 @@ RabbitMQ常见重点问题
            需要在 rabbit2 和 rabbit3 容器中分别执行以上命令，将它们加入到 rabbit1 的集群中
                rabbitmqctl stop_app
                rabbitmqctl join_cluster rabbit@rabbit1   
-                    示例: rabbitmqctl join_cluster rabbit@节点2      节点2终端执行
-                          rabbitmqctl join_cluster rabbit@节点3      节点3终端执行
+                    示例: rabbitmqctl join_cluster rabbit@主节点主机名      节点2终端执行
+                          rabbitmqctl join_cluster rabbit@主节点主机名     节点3终端执行
                rabbitmqctl start_app
 
             
-        镜像集群：主从集群,普通集群的基础上,添加了备份功能,提高集群的数据可用性
-            * 
-        仲裁集群：Raft协议确保主从数据的一致性
+        镜像集群：主从集群,普通集群的基础上,添加了备份功能,提高集群的数据可用性 
+            * 交换机,队列,队列中的消息会在各个mq的镜像节点之间同步备份
+            * 创建队列的节点称为该队列的主节点,备份到的其他节点叫做该队列的镜像节点
+            rabbitmqctl set_policy ha-all "^two\." '{"ha-mode":"exactly","ha-params":2,"ha-sync-mode":"automatic"}' 
+        
+        仲裁队列：Raft协议确保主从数据的一致性
+            * 与镜像队列一样,都是主从模式,支持主从数据同步
+            * 使用简单,没有复杂的配置
+            * 主从同步基于Raft协议,强一致
  
 
 ```
-
+https://www.bilibili.com/video/BV1uM4y177b7?spm_id_from=333.788.videopod.episodes&vd_source=d2f655c567775b67c1169ee3673e2916&p=10
 
 https://search.bilibili.com/all?keyword=elasticsearch&from_source=webtop_search&spm_id_from=333.788&search_source=3
 

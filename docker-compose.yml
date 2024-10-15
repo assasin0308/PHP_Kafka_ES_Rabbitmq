@@ -43,6 +43,7 @@ services:
   rabbitmq:
     image: rabbitmq:3-management
     container_name: rabbitmq
+    hostname: rabbitmq
     ports:
       - "5672:5672"
       - "15672:15672"
@@ -58,25 +59,36 @@ services:
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
     networks:
-      - app-network
+      - mq-network
 
-  rabbitmq-2:
+  rabbitmq2:
     image: rabbitmq:3-management
-    container_name: rabbitmq-2
+    container_name: rabbitmq2
+    hostname: rabbitmq2
     environment:
       RABBITMQ_ERLANG_COOKIE: SWQOKODSQALRPCLNMEQG
       RABBITMQ_DEFAULT_USER: admin
       RABBITMQ_DEFAULT_PASS: 123456
       #RABBITMQ_PLUGINS: rabbitmq_delayed_message_exchange rabbitmq_consistent_hash_exchange rabbitmq_top
+    links:
+      - rabbitmq
+    depends_on:
+      - rabbitmq
     ports:
       - "5673:5672"
       - "15673:15672"
-    networks:
-      - app-network
+#    command:
+#      - bash
+#      - -c
+#      - |
+#        rabbitmq-server -detached && rabbitmqctl stop_app && rabbitmqctl join_cluster rabbit@rabbitmq && rabbitmqctl start_app
+#    networks:
+#      - mq-network
 
-  rabbitmq-3:
+  rabbitmq3:
     image: rabbitmq:3-management
-    container_name: rabbitmq-3
+    container_name: rabbitmq3
+    hostname: rabbitmq3
     environment:
       RABBITMQ_ERLANG_COOKIE: SWQOKODSQALRPCLNMEQG
       RABBITMQ_DEFAULT_USER: admin
@@ -86,7 +98,7 @@ services:
       - "5674:5672"
       - "15674:15672"
     networks:
-      - app-network
+      - mq-network
 
 
 
@@ -113,6 +125,7 @@ services:
 
 
 networks:
+  mq-network:
   app-network:
     driver: bridge
 
@@ -120,5 +133,5 @@ volumes:
   esdata:
     driver: local
   rabbitmq_data:
-  rabbitmq2_data:
-  rabbitmq3_data:
+#  rabbitmq2_data:
+#  rabbitmq3_data:

@@ -45,6 +45,11 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: admin
       RABBITMQ_DEFAULT_PASS: 123456
+      # rabbitmq_management：管理界面
+      # rabbitmq_delayed_message_exchange：延迟消息交换
+      # rabbitmq_consistent_hash_exchange：一致性哈希交换
+      # rabbitmq_top：用于查看 RabbitMQ 状态
+      RABBITMQ_PLUGINS: rabbitmq_delayed_message_exchange rabbitmq_consistent_hash_exchange rabbitmq_top
     networks:
       - app-network
 

@@ -33,7 +33,7 @@ $channel->queue_bind($dlx_queue, $dlx_exchange,$dlx_route_key);
 $args = new AMQPTable([
     'x-dead-letter-exchange' => $dlx_exchange,
     'x-dead-letter-routing-key' => $dlx_route_key,
-    'x-message-ttl' => 10000 // 设置消息过期时间为10秒,单位为毫秒
+    'x-message-ttl' => 10000 // 设置消息队列过期时间为10秒,单位为毫秒
 ]);
 $channel->exchange_declare($exchange, 'direct', false, true, false);
 $channel->queue_declare($queue, false, true, false, false, false, $args);
@@ -49,19 +49,20 @@ $messageBody = [
 $properties = [
    'delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT,
     'content_type' => 'text/plain',
+    'expiration' => 5000 // 设置消息过期时间为10秒,单位为毫秒
 ];
 $message = new AMQPMessage(json_encode($messageBody), $properties);
 $channel->basic_publish($message, '', $queue);
 
-echo " [生产者:] 发送延迟消息!\n";
+echo  date('Y-m-d H:i:s'). "  [生产者:] 发送延迟消息!\n";
 
 
 // 消费死信队列中的消息
 $callback = function ($msg) {
     $orderData = json_decode($msg->body, true);
-    echo ' [消费者:] 收到延迟消息 ', $msg->body, "\n";
+    echo date('Y-m-d H:i:s'). ' [消费者:] 收到延迟消息 ', $msg->body, "\n";
     // 处理订单取消逻辑
-    echo "Order ID: " . $orderData['order_id'] . " has been cancelled.\n";
+    echo date('Y-m-d H:i:s'). " Order ID: " . $orderData['order_id'] . " has been cancelled.\n";
 
 };
 

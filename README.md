@@ -46,8 +46,11 @@ RabbitMQ常见重点问题
         3. 该消息被投递到队列中,队列中的消息数量已经超过最大队列长度
     如果该队列配置了dead-letter-exchange参数,指定了一个交换机,那么队列中的死信将会投递到该参数所指定的交换机中,该交换机被称为死信交换机,死信交换机中的消息被称为死信消息.
         
+       延迟队列插件 rabbitmq-plugins enable rabbitmq_delayed_message_exchange 
+          实现延迟订单,预约等场景问题
+       
     
-     
+  
 3. 消息堆积问题,如何解决百万消息积压,无法及时消费的问题 ?
     惰性队列
 4. 高可用问题,如何解决单点MQ故障而导致的不可以问题 ? 
@@ -56,6 +59,8 @@ RabbitMQ常见重点问题
 
 ```
 
+
+https://search.bilibili.com/all?keyword=elasticsearch&from_source=webtop_search&spm_id_from=333.788&search_source=3
 
 
 

@@ -22,11 +22,11 @@ $channel->queue_bind($queue, $exchange,$route_key);
 
 
 // 发布消息 模拟10000条消息堆积
-for($i=1;$i <= 10000; $i++){
-    $message = new AMQPMessage( date('Y-m-d H:i:s')." | 这是第 {$i} 条惰性队列消息! \n");
-    $channel->basic_publish($message, $exchange, $route_key);
-    echo date('Y-m-d H:i:s')." 这是第 {$i} 条惰性队列消息! \n ";
-}
+//for($i=1;$i <= 10000; $i++){
+//    $message = new AMQPMessage( date('Y-m-d H:i:s')." | 这是第 {$i} 条惰性队列消息! \n");
+//    $channel->basic_publish($message, $exchange, $route_key);
+//    echo date('Y-m-d H:i:s')." 这是第 {$i} 条惰性队列消息! \n ";
+//}
 
 
 /**********************************Consumer消费消息**********************************/

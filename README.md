@@ -87,27 +87,8 @@ RabbitMQ常见重点问题
         
         仲裁队列：Raft协议确保主从数据的一致性
             * 与镜像队列一样,都是主从模式,支持主从数据同步
-            * 使用简单,没有复杂的配置
+            * 使用简单,没有复杂的配置  队列类型必须是 Quorum
             * 主从同步基于Raft协议,强一致
- 
-
-```
-https://www.bilibili.com/video/BV1uM4y177b7?spm_id_from=333.788.videopod.episodes&vd_source=d2f655c567775b67c1169ee3673e2916&p=10
-
-https://search.bilibili.com/all?keyword=elasticsearch&from_source=webtop_search&spm_id_from=333.788&search_source=3
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

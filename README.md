@@ -16,12 +16,14 @@ composer require nmred/kafka-php
 # rabbitmq PHP客户端安装 ^2.10
 composer require php-amqplib/php-amqplib --ignore-platform-req=ext-sockets
 
+# elasticsearch PHP客户端安装
+composer require elasticsearch/elasticsearch --ignore-platform-req=ext-sockets
+
 ```
 
 ![img_1.png](img_1.png)
+### RabbitMQ常见重点问题
 ```txt
-RabbitMQ常见重点问题
-
 1. 消息的可靠性问题,如何确保发送的消息至少被消费一次 ? 
     * 生产者消息确认 
         > publisher-confirm 发送者确认消息是否投递到交换机 成功返回ack,失败返回nack; 
@@ -89,7 +91,13 @@ RabbitMQ常见重点问题
             * 与镜像队列一样,都是主从模式,支持主从数据同步
             * 使用简单,没有复杂的配置  队列类型必须是 Quorum
             * 主从同步基于Raft协议,强一致
+```
 
+### Elasticsearch常见重点问题
+```txt
+
+
+```
 
 
 

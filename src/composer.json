@@ -12,6 +12,7 @@
         }
     ],
     "require": {
-        "php-amqplib/php-amqplib": "^2.10"
+        "php-amqplib/php-amqplib": "^2.10",
+        "elasticsearch/elasticsearch": "^7.17"
     }
 }

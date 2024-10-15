@@ -60,6 +60,9 @@ RabbitMQ常见重点问题
         接收到消息后直接存入磁盘而非内存
         消费者消费消息时才会从磁盘中读取中加载到内存
         支持数百万条的消息存储
+        
+    设置一个队列为惰性队列时,只要在声明队列时,指定x-queue-mode参数为lazy即可.可以通过命令将一个运行中的队列修改为惰性队列
+        rabbitmqctl set_policy Lazy "^lazy-queue$" '{"queue-mode":"lazy"}' --apply-to queues
     
 4. 高可用问题,如何解决单点MQ故障而导致的不可以问题 ? 
     MQ集群

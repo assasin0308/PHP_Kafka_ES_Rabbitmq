@@ -95,8 +95,30 @@ composer require elasticsearch/elasticsearch --ignore-platform-req=ext-sockets
 
 ### Elasticsearch常见重点问题
 ```txt
+    安装 Elasticsearch 插件  Ik分词器
 
 
+    https://www.bilibili.com/video/BV1b8411Z7w5?spm_id_from=333.788.player.switch&vd_source=d2f655c567775b67c1169ee3673e2916&p=8
+
+```
+
+### Beanstalkd 延迟任务常见重点问题
+```shell
+composer require pda/pheanstalk --ignore-platform-req=ext-sockets
+```
+```txt
+    Beanstalkd 是一个高性能,轻量级的内存队列系统;
+    最初设计目的是通过后台异步执行耗时的任务来降低高容器量Web应用系统的访问延迟问题.
+    Beanstalkd 的主要组件包括生产者,工作队列和消费者. 
+    
+     
+
+
+
+```
+
+### Redis常见重点问题
+```txt
 ```
 
 

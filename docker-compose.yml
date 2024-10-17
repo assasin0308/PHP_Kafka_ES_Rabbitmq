@@ -118,6 +118,7 @@ services:
       - "9300:9300"
     volumes:
       - esdata:/usr/share/elasticsearch/data  # 数据持久化
+#      - esplugins:/usr/share/elasticsearch/plugins  # 插件持久化
     networks:
       - app-network
 
@@ -133,6 +134,78 @@ services:
     networks:
       - app-network
 
+  redis:
+    image: redis:6.2.6
+    volumes:
+      - redis_data:/data
+      - ./conf/redis/redis.conf:/usr/local/etc/redis.conf
+#      - ./redis/redis-check-aof.sh:/usr/local/bin/redis-check-aof.sh
+#    command: bash -c "chmod +x /usr/local/bin/redis-check-aof.sh
+#        && /usr/local/bin/redis-check-aof.sh
+#        && /usr/local/bin/redis-server /usr/local/etc/redis.conf"
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    environment:
+      - TZ=Asia/Shanghai
+    ports:
+      - "6379:6379"
+
+#  phpredisadmin:
+#    image: erikdubbelboer/phpredisadmin:latest
+#    restart: always
+#    logging:
+#      driver: "json-file"
+#      options:
+#        max-size: "10m"
+#        max-file: "3"
+#    environment:
+#      - TZ=Asia/Shanghai
+#      - ADMIN_USER=admin
+#      - ADMIN_PASS=123456
+#      - REDIS_1_HOST=redis
+#      - REDIS_1_PORT=6379
+#    ports:
+#      - "6380:6380"
+#    depends_on:
+#      - redis
+
+  beanstalkd:
+    image: schickling/beanstalkd
+    container_name: beanstalkd
+    restart: always
+    logging:
+      driver: "local"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    environment:
+      - TZ=Asia/Shanghai
+    ports:
+      - "11300:11300"
+
+  beanstalkd-console:
+    image: schickling/beanstalkd-console
+    restart: always
+    logging:
+      driver: "local"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    environment:
+      - TZ=Asia/Shanghai
+      - AUTH=enable
+      - AUTH_USERNAME=admin
+      - AUTH_PASSWORD=123456
+      - BEANSTALKD_PORT_11300_TCP_ADDR=beanstalkd
+    ports:
+      - "2080:2080"
+    depends_on:
+      - beanstalkd
+
 
 
 
@@ -142,8 +215,10 @@ networks:
     driver: bridge
 
 volumes:
+  esplugins:
   esdata:
     driver: local
   rabbitmq_data:
+  redis_data:
 #  rabbitmq2_data:
 #  rabbitmq3_data:

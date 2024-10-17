@@ -11,14 +11,21 @@ $pheanstalk->useTube('beansTube');
 //消费任务 并处理: 从管道中去除任务,处理完毕后,删除任务
 $pheanstalk->watch('beansTube');
 
-//取出任务
-$job = $pheanstalk->reserve();
+while (1) {
+    //取出任务
+    $job = $pheanstalk->reserve();
 //获取任务数据
-$job_data = $job->getData();
+    $job_data = $job->getData();
+//TODO 处理任务 如30分钟未付款取消
 
-//TODO 处理任务 30分钟未付款取消
-$pheanstalk->delete($job);
+    //处理任务完毕后, 删除任务
+    $pheanstalk->delete($job);
+
+    echo $job_data."\n";
+
+    sleep(0.6);
+    echo date('Y-m-d H:i:s'). ' | 消费者: 消息消费成功!' . PHP_EOL;
+    echo str_repeat('-', 60) . PHP_EOL;
+}
 
 
-print_r($job);
-print_r($job_data);

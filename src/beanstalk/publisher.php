@@ -23,8 +23,8 @@ $order = [
 $job_id = $pheanstalk->put(
     json_encode($order,JSON_UNESCAPED_UNICODE|JSON_THROW_ON_ERROR), //消息体
     0, //优先级 数值越小,优先级越高
-    0, //延迟时间 0表示立即执行,单位秒,延迟让消费者去消费
-    60 //超时时间
+    10, //延迟时间 0表示立即执行,单位秒,延迟让消费者去消费
+    60 //超时时间 任务执行一段时间后没有执行完毕,则重新入队
 );
 
 //查看单个任务状态

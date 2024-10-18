@@ -109,14 +109,22 @@ composer require pda/pheanstalk --ignore-platform-req=ext-sockets
 ```txt
     Beanstalkd 是一个高性能,轻量级的内存队列系统;
     最初设计目的是通过后台异步执行耗时的任务来降低高容器量Web应用系统的访问延迟问题.
-    Beanstalkd 的主要组件包括生产者,工作队列和消费者. 
+    Beanstalkd特点:
+       1. 天然的支持队列优先级(任务插队)
+       2. 支持延时任务(实现定时任务)
+       3. 持久化(定时将内存中的数据刷到binlog日志)
+       4. 预留(把任务设置为预留,消费者无法取出任务,等某个合适的时机再处理)
+       5. 任务超时重发(消费者必须在指定的时间内处理任务,如果没有则认为处理失败,重新入队列)
     任务属性:
        1. delayed - 延时执行的任务,任务到期后会自动成为当前任务
        2. ready - 准备好状态,可以被消费
        3. reserved - 消费者将任务读取出来,正在执行的任务
        4  buried - 保留的任务,任务不会被执行,也不会小时,除非被重新放入队列
        5. delete - 消息被彻底删除,Beanstalkd不在维护这些消息
+       
     
+    与其他消息队列的区别:
+        1. Beanstalkd 是一个内存队列,消息在内存中,重启服务后消息会丢失
      
 
 
@@ -127,10 +135,16 @@ composer require pda/pheanstalk --ignore-platform-req=ext-sockets
 ```txt
 ```
 
+### 高并发应用多进程处理消息队列
+```txt
+    
+```
 
 
 
 
+
+https://www.bilibili.com/video/BV1Ca4y1J75P/?spm_id_from=player_end_recommend_autoplay&vd_source=d2f655c567775b67c1169ee3673e2916
 
 
 

@@ -135,16 +135,23 @@ composer require pda/pheanstalk --ignore-platform-req=ext-sockets
 ```txt
 ```
 
-### 高并发应用多进程处理消息队列
+### 高并发应用多进程消息队列任务处理
+```shell
+# workerman相关
+composer require workerman/workerman --ignore-platform-req=ext-sockets
+composer require workerman/phpsocket.io --ignore-platform-req=ext-sockets
+composer require workerman/redis --ignore-platform-req=ext-sockets
+composer require workerman/http-client --ignore-platform-req=ext-sockets
+composer require workerman/mqtt --ignore-platform-req=ext-sockets
+composer require workerman/redis-queue  --ignore-platform-req=ext-sockets
+composer require workerman/stomp  --ignore-platform-req=ext-sockets
+composer require workerman/rabbitmq  --ignore-platform-req=ext-sockets
+composer require workerman/crontab  --ignore-platform-req=ext-sockets
+```
 ```txt
     
 ```
 
-
-
-
-
-https://www.bilibili.com/video/BV1Ca4y1J75P/?spm_id_from=player_end_recommend_autoplay&vd_source=d2f655c567775b67c1169ee3673e2916
 
 
 

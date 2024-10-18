@@ -170,6 +170,47 @@ services:
 
 
 
+  rocketmq-nameserver:
+    image: foxiswho/rocketmq:server
+    container_name: rocketmq-nameserver
+    ports:
+      - "9876:9876"
+    volumes:
+      - rocketmq_data:/root/rocketmq
+
+  rocketmq-broker:
+    image: foxiswho/rocketmq:server
+    container_name: rocketmq-broker
+    environment:
+      - BROKER_ID=0
+      - NAMESRV_ADDR=rocketmq-nameserver:9876
+    ports:
+      - "10911:10911"
+    volumes:
+      - rocketmq_data:/root/rocketmq
+    depends_on:
+      - rocketmq-nameserver
+
+  rocketmq-console:
+    image: apacherocketmq/rocketmq-console:2.0.0
+    container_name: rocketmq-console
+    environment:
+      - JAVA_OPTS=-Duser.home=/root
+      - NAMESRV_ADDR=rocketmq-nameserver:9876
+      - TZ=Asia/Shanghai
+      - AUTH=enable
+      - AUTH_USERNAME=admin
+      - AUTH_PASSWORD=123456
+    ports:
+      - "8080:8080"
+    depends_on:
+      - rocketmq-nameserver
+
+
+
+
+
+
 
 
 
@@ -286,6 +327,7 @@ volumes:
   esdata:
     driver: local
   rabbitmq_data:
+  rocketmq_data:
   redis_data:
 #  rabbitmq2_data:
 #  rabbitmq3_data:
